@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:{
           type:DataTypes.INTEGER,
           allowNull:false
-        }
+        },
+        as:'SCREEN'
       });
       this.hasMany(Booked,{
         foreignKey:{

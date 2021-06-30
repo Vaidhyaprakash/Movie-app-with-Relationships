@@ -6,6 +6,8 @@ const theatre = require("./controllers/theatre");
 const user = require("./controllers/user");
 const search = require("./controllers/search");
 const ticketBooking = require("./controllers/ticketBooking");
+const screen = require("./controllers/screen");
+
 
 const init = async () => {
 
@@ -58,6 +60,25 @@ const init = async () => {
         path:'/theatre/{theatreName}',
         handler:theatre.deleteTheatre
     });
+    //Screen and Seats Get , Create , PUT, Delete
+    server.route({
+        method:'GET',
+        path:'/screens',
+        handler:screen.showScreens
+    },{
+        method:'POST',
+        path:'/screen',
+        handler:screen.addScreen
+    },{
+        method:'PUT',
+        path:'/screen',
+        handler:screen.updateScreen
+    },{
+        method:'DELETE',
+        path:'/screen/{screenId}',
+        handler:screen.deleteScreen
+    });
+    
     //User Get , Create , PUT, Delete
     server.route({
         method:'GET',
@@ -73,7 +94,7 @@ const init = async () => {
         handler:user.updateUser
     },{
         method:'DELETE',
-        path:'/user/{userName}',
+        path:'/user/{userId}',
         handler:user.deleteUser
     });
     //Search based on MovieName, Theatre, pincode, actor, date
@@ -104,7 +125,7 @@ const init = async () => {
         path:'/TicketBooking',
         handler:ticketBooking.userTicketBooking
     });
-
+ 
     await server.start();
     console.log('Server running on', server.info.uri);
     await sequelize.sync({alter:true});

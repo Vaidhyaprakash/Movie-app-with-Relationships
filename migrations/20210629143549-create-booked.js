@@ -1,6 +1,8 @@
 'use strict';
+
+
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (queryInterface, DataTypes) => {
     await queryInterface.createTable('Bookings', {
       id:{
         type:DataTypes.INTEGER,
@@ -22,10 +24,14 @@ module.exports = {
       TheatreId:{
         type:DataTypes.INTEGER,
         allowNull:false
+      },
+      ScreenId:{
+        type:DataTypes.INTEGER,
+        allowNull:false
       }
     });
   },
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface, DataTypes) => {
     await queryInterface.dropTable('Bookings');
   }
 };
