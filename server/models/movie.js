@@ -18,12 +18,12 @@ module.exports = (sequelize, DataTypes) => {
         },
         as:'SCREEN'
       });
-      this.hasMany(Booked,{
-        foreignKey:{
-          type:DataTypes.INTEGER,
-          allowNull:false
-        }
-      });
+      // this.hasMany(Booked,{
+      //   foreignKey:{
+      //     type:DataTypes.INTEGER,
+      //     allowNull:false
+      //   }
+      // });
     }
   };
   Movie.init({
@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.FLOAT
     },
     releaseDate:{
-      type:DataTypes.DATE
+      type:DataTypes.DATEONLY
     }
   }, {
     sequelize,

@@ -1,4 +1,4 @@
-const {Screen,Seats} = require("../models/screen");
+const {Screen,Seats} = require("../models");
 
 exports.showScreens = async function showScreens(req,h){
     try{
@@ -10,11 +10,11 @@ exports.showScreens = async function showScreens(req,h){
 };
 
 exports.addScreen = async function addScreen(req,h){
-    const {screenName,MovieId,TheatreId,totalSeats,availableSeats,bookedSeats}=req.payload;
+    const {screenName,MovieId,TheatreId,totalSeats,availableSeats,bookedSeats,date}=req.payload;
     try{
-        const screen = await Screen.create({screenName,MovieId,TheatreId,totalSeats});
+        const screen = await Screen.create({screenName,MovieId,TheatreId,totalSeats,date});
         const seats = await Seats.create({
-            ScreenId:screen.id,
+            SEATId:screen.id,
             availableSeats,
             bookedSeats
         });
@@ -25,7 +25,7 @@ exports.addScreen = async function addScreen(req,h){
 };
 
 exports.updateScreen = async function updateScreen(req,h){
-    const {id,screenName,MovieId,TheatreId,totalSeats,availableSeats,bookedSeats}=req.payload;
+    const {id,screenName,MovieId,TheatreId,totalSeats,availableSeats,bookedSeats,date}=req.payload;
     try{
         const screen = await Screen.findOne({
             include:['SEATS'],
@@ -37,11 +37,11 @@ exports.updateScreen = async function updateScreen(req,h){
             return `No Screen with id ${id} Exists`;
         }else{
             await screen.update({
-                screenName,MovieId,TheatreId,totalSeats
+                screenName,MovieId,TheatreId,totalSeats,date
             });
-            screen.SEATS.availableSeats=availableSeats;
-            screen.SEATS.bookedSeats=bookedSeats;
-            screen.save();
+            await Seats.update({bookedSeats,availableSeats},{where:{
+                SEATId:screen.id
+            }});
             return `Screen and Seats details updated Successfully.`;
         }
     }catch(err){
@@ -50,7 +50,7 @@ exports.updateScreen = async function updateScreen(req,h){
 };
 
 exports.deleteScreen = async function deleteScreen(req,h){
-    const id = req.params.ScreenId;
+    const id = req.params.screenId;
     try{
         const screen = await Screen.findOne({
             where:{
@@ -60,16 +60,16 @@ exports.deleteScreen = async function deleteScreen(req,h){
         if(screen==null){
             return "No Such Screen Exists";
         }else{
-            await Screen.findOne({
+            await Screen.destroy({
                 where:{
                     id
                 }
-            }).destroy();
-            await Seats.findOne({
+            });
+            await Seats.destroy({
                 where:{
-                    ScreenId:id
+                    SEATId:id
                 }
-            }).destroy();
+            });
             return `Screen and Seat details deleted Successfully`;
         }
     }catch(err){

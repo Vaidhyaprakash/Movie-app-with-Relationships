@@ -25,7 +25,7 @@ module.exports = {
         type:DataTypes.FLOAT
       },
       releaseDate:{
-        type:DataTypes.DATE
+        type:DataTypes.DATEONLY
       }
     });
   },

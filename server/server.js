@@ -25,7 +25,7 @@ const init = async () => {
         }
     });
     //Movie Get, Add , Update, Delete
-    server.route({
+    server.route([{
         method:'GET',
         path:'/movies',
         handler:movie.showMovies
@@ -41,9 +41,9 @@ const init = async () => {
         method:'DELETE',
         path:'/movie/{movieTitle}',
         handler:movie.deleteMovie
-    });
+    }]);
     //Theatre Get , Add , Update , Delete
-    server.route({
+    server.route([{
         method:'GET',
         path:'/theatres',
         handler:theatre.showTheatres
@@ -59,9 +59,9 @@ const init = async () => {
         method:'DELETE',
         path:'/theatre/{theatreName}',
         handler:theatre.deleteTheatre
-    });
+    }]);
     //Screen and Seats Get , Create , PUT, Delete
-    server.route({
+    server.route([{
         method:'GET',
         path:'/screens',
         handler:screen.showScreens
@@ -77,10 +77,10 @@ const init = async () => {
         method:'DELETE',
         path:'/screen/{screenId}',
         handler:screen.deleteScreen
-    });
+    }]);
     
-    //User Get , Create , PUT, Delete
-    server.route({
+    //User Get , Create , PUT, Delete, show single user
+    server.route([{
         method:'GET',
         path:'/users',
         handler:user.showUsers
@@ -96,9 +96,13 @@ const init = async () => {
         method:'DELETE',
         path:'/user/{userId}',
         handler:user.deleteUser
-    });
+    },{
+        method:'GET',
+        path:'/user/{userId}',
+        handler:user.user
+    }]);
     //Search based on MovieName, Theatre, pincode, actor, date
-    server.route({
+    server.route([{
         method:'POST',
         path:'/movieSearch',
         handler:search.movieSearch
@@ -118,7 +122,7 @@ const init = async () => {
         method:'POST',
         path:'/dateSearch',
         handler:search.dateSearch
-    });
+    }]);
     //User Ticket Booking
     server.route({
         method:'POST',

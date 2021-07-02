@@ -11,10 +11,33 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({Movie,Theatre,User,Screen}) {
       // define association here
-      this.belongsTo(Movie,{as:'MOVIE'});
-      this.belongsTo(Theatre,{as:'THEATRE'});
-      this.belongsTo(User,{as:'USER'});
-      this.belongsTo(Screen,{as:'SCREEN'});
+      this.belongsTo(Movie,{
+        foreignKey:{
+          type:DataTypes.INTEGER,
+          allowNull:false
+        },
+        as:'MOVIE'
+      });
+      this.belongsTo(Theatre,{
+        foreignKey:{
+          type:DataTypes.INTEGER,
+          allowNull:false
+        },
+        as:'THEATRE'
+      });
+      this.belongsTo(User,{
+        foreignKey:{
+          type:DataTypes.INTEGER,
+          allowNull:false
+        },
+        as:'USER'});
+      this.belongsTo(Screen,{
+        foreignKey:{
+          type:DataTypes.INTEGER,
+          allowNull:false
+        },
+        as:'SCREEN'
+      });
     }
   };
   Booked.init({

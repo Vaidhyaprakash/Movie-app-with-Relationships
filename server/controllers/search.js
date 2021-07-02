@@ -14,14 +14,14 @@ exports.movieSearch = async function movieSearch(req,h){
         }else{
             let theatre=[];
             for(let key in movie.SCREEN){
-                if(key=='TheatreId'){
+                
                     const search = await Theatre.findOne({
                         where:{
-                            id:movie.SCREEN[key]
+                            id:movie.SCREEN[key].TheatreId
                         }
                     });
                     theatre.push(search.name);
-                }
+                
             }
             return h.response(theatre);
         }
@@ -33,25 +33,25 @@ exports.movieSearch = async function movieSearch(req,h){
 exports.theatreSearch = async function theatreSearch(req,h){
     const {name} = req.payload;
     try{
-        const theatre = await Theatre.findAll({
+        const theatre = await Theatre.findOne({
             where:{
                 name
             },
-            include:['SCREEN']
+            include:['SCREENS']
         });
         if(theatre==null){
-            return `No theatren named ${name} is there.`;
+            return `No theatre named ${name} is there.`;
         }else{
             let movie=[];
-            for(let key in theatre.SCREEN){
-                if(key=='MovieId'){
+            for(let k in theatre.SCREENS){
+                
                     const search = await Movie.findOne({
                         where:{
-                            id:theatre.SCREEN[key]
+                            id:theatre.SCREENS[k].MovieId
                         }
                     });
-                    movie.push(search);
-                }
+                    movie.push(search.title);
+                
             }
             return h.response(movie);
         }
@@ -80,21 +80,39 @@ exports.areaSearch = async function areaSearch(req,h){
 };
 
 exports.actorSearch = async function actorSearch(req,h){
-    const {hero}=req.payload;
-    try{
-        const movies = await Movie.findAll({
-            where:{
-                hero
+    const {hero,heroine}=req.payload;
+    if(hero!=undefined){
+        try{
+            const movies = await Movie.findAll({
+                where:{
+                    hero
+                }
+            });
+            if(movies==null){
+                return `Recently, ${hero} had acted no movies`;
+            }else{
+                return h.response(movies);
             }
-        });
-        if(movies==null){
-            return `Recently, ${hero} had acted no movies`;
-        }else{
-            return h.response(movies);
+        }catch(err){
+            console.log(err);
         }
-    }catch(err){
-        console.log(err);
+    }else{
+        try{
+            const movies = await Movie.findAll({
+                where:{
+                    heroine
+                }
+            });
+            if(movies==null){
+                return `Recently, ${heroine} had acted no movies`;
+            }else{
+                return h.response(movies);
+            }
+        }catch(err){
+            console.log(err);
+        }
     }
+    
 };
 
 exports.dateSearch = async function dateSearch(req,h){

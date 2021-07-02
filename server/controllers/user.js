@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const {User} = require("../models");
 
 exports.showUsers = async function showUsers(req,h){
     try{
@@ -64,3 +64,22 @@ exports.deleteUser = async function deleteUser(req,h){
         console.log(err);
     }
 };
+
+exports.user = async function user(req,h){
+    const id = req.params.userId;
+    try{
+        const user = await User.findOne({
+            where:{
+                id
+            },
+            include:['BOOKINGS']
+        });
+        if(user==null){
+            return "No such user Exists";
+        }else{
+            return h.response(user);
+        }
+    }catch(err){
+        console.log(err);
+    }
+}

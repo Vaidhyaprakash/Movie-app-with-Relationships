@@ -1,4 +1,4 @@
-const Theatre = require("../models/theatre");
+const {Theatre} = require("../models");
 
 exports.showTheatres = async function showTheatres(req,h){
     try{
@@ -10,9 +10,9 @@ exports.showTheatres = async function showTheatres(req,h){
 };
 
 exports.addTheatre = async function addTheatre(req,h){
-    const {name,screens,pincode,date}=req.payload;
+    const {name,screens,pincode}=req.payload;
     try{
-        const theatre = await Theatre.create({name,screens,pincode,date});
+        const theatre = await Theatre.create({name,screens,pincode});
         return "Theatre details added to Theatres table, do fill screens and seating details seperately.";
     }catch(err){
         console.log(err);
@@ -20,20 +20,20 @@ exports.addTheatre = async function addTheatre(req,h){
 };
 
 exports.updatetTheatre = async function updatetTheatre(req,h){
-    const {name,screens,pincode,date}=req.payload;
+    const {id,name,screens,pincode}=req.payload;
     try{
         const theatre = await Theatre.findOne({
             where:{
-                name
+                id
             }
         });
         if(theatre==null){
             return "No such Theatre Exists";
         }else{
             
-                await Theatre.update({name,screens,pincode,date},{
+                await Theatre.update({name,screens,pincode},{
                     where:{
-                        name
+                        id
                     }
                 });
                 return `${name} updated Successfully.`
@@ -47,11 +47,16 @@ exports.updatetTheatre = async function updatetTheatre(req,h){
 exports.deleteTheatre = async function deleteTheatre(req,h){
     const name = req.params.theatreName;
     try{
-        await Theatre.findOne({
+        const theatre = await Theatre.findOne({
             where:{
                 name
             }
-        }).destroy();
+        });
+        if(theatre==null){
+            return `No Thestre with name ${name} exists`;
+        }else{
+            await Theatre.destroy({where:{name}});
+        }
         return `Theatre with name ${name} is deleted`;
     }catch(err){
         console.log(err);

@@ -3,59 +3,55 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Theatre extends Model {
+  class Screen extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({Screen,Booked}) {
+    static associate({Movie,Theatre,Seats,Booked}) {
       // define association here
-      this.hasMany(Screen,{
+      this.hasOne(Seats,{
         foreignKey:{
           type:DataTypes.INTEGER,
           allowNull:false
         },
-        as:'SCREEN'
+        as:'SEATS'
       });
-      this.hasMany(Booked,{
-        foreignKey:{
-          type:DataTypes.INTEGER,
-          allowNull:false
-        },
-        as:'Booked'
-      });
+      this.belongsTo(Movie);
+      this.belongsTo(Theatre);
+      
+      // this.hasMany(Booked,{
+      //   foreignKey:{
+      //     type:DataTypes.INTEGER,
+      //     allowNull:false
+      //   }
+      // });
     }
   };
-  Theatre.init({
+  Screen.init({
     id:{
       type:DataTypes.INTEGER,
       primaryKey:true,
       autoIncrement:true,
       allowNull:false
     },
-    name:{
+    screenName:{
       type:DataTypes.STRING,
       allowNull:false
     },
-    screens:{
-      type:DataTypes.INTEGER,
-      allowNull:false,
-      defaultValue:1
-    },
-    pincode:{
+    totalSeats: {
       type:DataTypes.INTEGER,
       allowNull:false
     },
     date:{
-      type:DataTypes.DATE,
+      type:DataTypes.DATEONLY,
       allowNull:false
     }
-
   }, {
     sequelize,
     timestamps:false,
-    modelName: 'Theatre',
+    modelName: 'Screen',
   });
-  return Theatre;
+  return Screen;
 };

@@ -1,4 +1,4 @@
-const Movie = require("../models/movie");
+const {Movie} = require("../models");
 
 exports.showMovies = async function showMovies(req,h){
     try{
@@ -12,7 +12,7 @@ exports.showMovies = async function showMovies(req,h){
 exports.addMovie = async function addMovie(req,h){
     const {title,hero,heroine,director,durationInHrs,releaseDate}=req.payload;
     try{
-        const movie = await Movie.create({title,hero,heroine,director,durationInHrs,releasedate});
+        const movie = await Movie.create({title,hero,heroine,director,durationInHrs,releaseDate});
         return "Movie added to the Movies Table";
     }catch(err){
         console.log(err);

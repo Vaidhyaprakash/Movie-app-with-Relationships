@@ -3,35 +3,36 @@
 
 module.exports = {
   up: async (queryInterface, DataTypes) => {
-    await queryInterface.createTable('Bookings', {
+    await queryInterface.createTable('Screens', {
       id:{
         type:DataTypes.INTEGER,
         primaryKey:true,
         autoIncrement:true,
         allowNull:false
       },
-      seatNumber: {
-        type:DataTypes.ARRAY(DataTypes.INTEGER)
-      },
-      UserId:{
+      totalSeats: {
         type:DataTypes.INTEGER,
+        allowNull:false
+      },
+      screenName:{
+        type:DataTypes.STRING,
         allowNull:false
       },
       MovieId:{
         type:DataTypes.INTEGER,
-        allowNull:false
+        allowNull:false,
       },
       TheatreId:{
         type:DataTypes.INTEGER,
         allowNull:false
       },
-      ScreenId:{
-        type:DataTypes.INTEGER,
+      date:{
+        type:DataTypes.DATEONLY,
         allowNull:false
       }
     });
   },
   down: async (queryInterface, DataTypes) => {
-    await queryInterface.dropTable('Bookings');
+    await queryInterface.dropTable('Screens');
   }
 };
