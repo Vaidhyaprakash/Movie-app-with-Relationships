@@ -10,9 +10,9 @@ exports.showUsers = async function showUsers(req,h){
 };
 
 exports.addUser = async function addUser(req,h){
-    const { name, age}=req.payload;
+    const { Email,name, age,password}=req.payload;
     try{
-        const user = await User.create({name,age});
+        const user = await User.create({Email,name,age,password});
         return `New User ${name} is created`;
     }catch(err){
         console.log(err);
@@ -20,7 +20,7 @@ exports.addUser = async function addUser(req,h){
 };
 
 exports.updateUser = async function updateUser(req,h){
-    const{id,name,age}=req.payload;
+    const{id,name,age,Email,password}=req.payload;
     try{
         const user = await User.findOne({
             where:{
@@ -30,7 +30,7 @@ exports.updateUser = async function updateUser(req,h){
         if(user==null){
             return "No Such user Exists";
         }else{
-            await User.update({name,age},{
+            await User.update({Email,name,age,password},{
                 where:{
                     id
                 }

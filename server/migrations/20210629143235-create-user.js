@@ -8,12 +8,20 @@ module.exports = {
         autoIncrement:true,
         allowNull:false
       },
+      Email:{
+        type:DataTypes.STRING,
+        allowNull:false
+      },
       name:{
         type:DataTypes.STRING,
         allowNull:false
       },
       age:{
         type:DataTypes.INTEGER,
+        allowNull:false
+      },
+      password:{
+        type:DataTypes.STRING,
         allowNull:false
       }
     });

@@ -1,0 +1,43 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+/* Login */
+.login-form {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+}
+
+.register-btn {
+  position: absolute;
+  right: 0;
+}
+
+.registerText {
+  position: absolute;
+  right: 0;
+}
+/* Home */
+.card {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px;
+}
+
+img {
+  width: 250px;
+  height: 250px;
+}
+
+.home-cards {
+  position: absolute;
+  left: 12.5%;
+  top: 20%;
+}
+.SettingsIcon {
+  position: absolute;
+  right: 10%;
+}
