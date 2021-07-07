@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 function LoginForm() {
+  const [login, setLogin] = useState(false);
   return (
     <div>
       <form className="login-form">
@@ -31,16 +32,7 @@ function LoginForm() {
             name="password"
           />
         </div>
-        <div className="mb-3 form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="exampleCheck1"
-          />
-          <label className="form-check-label" htmlFor="exampleCheck1" required>
-            Check me out
-          </label>
-        </div>
+
         <button type="submit" className="btn btn-primary">
           Login
         </button>

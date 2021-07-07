@@ -1,10 +1,20 @@
 import React from "react";
 import SettingsIcon from "@material-ui/icons/Settings";
+import { useHistory } from "react-router-dom";
 
-function Home() {
+function Home(props) {
+  const homeHistory = useHistory();
+  function handleSettingsClick() {
+    homeHistory.push({ pathname: "/Settings" });
+    console.log(props.location.state);
+  }
   return (
     <div>
-      <SettingsIcon className="SettingsIcon" fontSize="large" />
+      <SettingsIcon
+        className="SettingsIcon"
+        fontSize="large"
+        onClick={handleSettingsClick}
+      />
       <div className="home-cards">
         <div className="card" style={{ width: "18rem" }}>
           <img
@@ -15,7 +25,7 @@ function Home() {
           <div className="card-body">
             <center>
               <h5 className="card-title">Movie</h5>
-              <a href="https://www.google.com" className="btn btn-primary">
+              <a href="MovieSearch" className="btn btn-primary">
                 Details
               </a>
             </center>
@@ -30,7 +40,7 @@ function Home() {
           <div className="card-body">
             <center>
               <h5 className="card-title">Theatre</h5>
-              <a href="www.google.com" className="btn btn-primary">
+              <a href="TheatreSearch" className="btn btn-primary">
                 Details
               </a>
             </center>

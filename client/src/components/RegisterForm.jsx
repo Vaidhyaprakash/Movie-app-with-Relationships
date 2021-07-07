@@ -1,16 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "../axios";
+import { useHistory } from "react-router-dom";
 
 function RegisterForm() {
+  const [Email, setEmail] = useState();
+  const history = useHistory();
+  const [data, setData] = useState({
+    name: "",
+    age: "",
+    email: "",
+    password: "",
+  });
+
+  function handleChange(event) {
+    const newData = { ...data };
+    newData[event.target.name] = event.target.value;
+    setData(newData);
+  }
+  async function createUser(event) {
+    event.preventDefault();
+    try {
+      await axios.post("/user", data).then(function (response) {
+        setEmail(data.email);
+        console.log(Email);
+        history.push({ pathname: "/Home", state: { email: Email } });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <div>
-      <form className="login-form">
+      <form className="login-form was-validated" onSubmit={createUser}>
         <div className="mb3">
           <label className="form-label">Name</label>
-          <input className="form-control" type="text" name="name" />
+          <input
+            className="form-control"
+            type="text"
+            name="name"
+            value={data.name}
+            required
+            onChange={(event) => handleChange(event)}
+          />
         </div>
         <div className="mb3">
           <label className="form-label">Age</label>
-          <input className="form-control" type="number" name="age" />
+          <input
+            className="form-control"
+            type="number"
+            name="age"
+            value={data.age}
+            required
+            onChange={(event) => handleChange(event)}
+          />
         </div>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail2" className="form-label">
@@ -21,8 +63,11 @@ function RegisterForm() {
             className="form-control"
             id="exampleInputEmail2"
             aria-describedby="emailHelp"
-            name="Email"
+            name="email"
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            value={data.email}
+            onChange={(event) => handleChange(event)}
+            required
           />
           <div id="emailHelp" className="form-text">
             We'll never share your email with anyone else.
@@ -37,18 +82,12 @@ function RegisterForm() {
             className="form-control"
             id="exampleInputPassword2"
             name="password"
+            value={data.password}
+            required
+            onChange={(event) => handleChange(event)}
           />
         </div>
-        <div className="mb-3 form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="exampleCheck2"
-          />
-          <label className="form-check-label" htmlFor="exampleCheck2">
-            Check me out
-          </label>
-        </div>
+
         <button
           type="submit"
           className="btn btn-primary"
