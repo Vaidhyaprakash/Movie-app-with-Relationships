@@ -30,12 +30,6 @@ const init = async () => {
       method: "GET",
       path: "/movies",
       handler: movie.showMovies,
-      // config: {
-      //   cors: {
-      //     origin: ["*"],
-      //     additionalHeaders: ["cache-control", "x-requested-with"],
-      //   },
-      // },
     },
     {
       method: "POST",
