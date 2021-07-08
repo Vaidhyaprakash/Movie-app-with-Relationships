@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import axios from "../axios";
 
-function MovieName() {
-  const [title, setTitle] = useState({ title: "" });
-  const [result, setResult] = useState({});
+function MovieDate() {
+  const [date, setDate] = useState({ date: "" });
+  const [result, setResult] = useState([]);
   function handleChange(event) {
-    const newTitle = { title: event.target.value };
-    setTitle(newTitle);
+    const newDate = { date: event.target.value };
+    setDate(newDate);
   }
-  async function movieSearch(event) {
+  async function dateSearch(event) {
     event.preventDefault();
     try {
-      const output = await axios.post("/movieSearch", title);
+      const output = await axios.post("/dateSearch", date);
       setResult(output);
     } catch (err) {
       console.log(err);
@@ -19,10 +19,10 @@ function MovieName() {
   }
   return (
     <div className="login-form">
-      <form onSubmit={movieSearch}>
+      <form onSubmit={dateSearch}>
         <div className="row mb-3">
           <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">
-            Title
+            Release Date
           </label>
           <div className="col-sm-10">
             <input
@@ -47,12 +47,12 @@ function MovieName() {
           placeholder="Leave a comment here"
           id="floatingTextarea2"
           style={{ height: "200px" }}
-          value={result.data}
+          value={JSON.stringify(result.data)}
         ></textarea>
-        <label htmlFor="floatingTextarea2">Running In</label>
+        <label htmlFor="floatingTextarea2">Movies are</label>
       </div>
     </div>
   );
 }
 
-export default MovieName;
+export default MovieDate;

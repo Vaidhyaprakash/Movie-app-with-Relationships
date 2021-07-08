@@ -30,7 +30,7 @@ function MovieName() {
               className="form-control"
               id="colFormLabel"
               placeholder="Enter Movie Title"
-              // value={title.title}
+              value={title.title}
               onChange={(event) => handleChange(event)}
             />
           </div>

@@ -159,9 +159,9 @@ const init = async () => {
 
   await server.start();
   console.log("Server running on", server.info.uri);
-  await sequelize.sync({ alter: true });
-  //await sequelize.authenticate();
-  //console.log("Database Connected...!");
+  //await sequelize.sync({ alter: true });
+  await sequelize.authenticate();
+  console.log("Database Connected...!");
 };
 
 init();

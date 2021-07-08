@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
 function LoginForm() {
-  const [login, setLogin] = useState(false);
   return (
     <div>
       <form className="login-form">

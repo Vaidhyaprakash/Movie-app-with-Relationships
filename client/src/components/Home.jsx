@@ -55,7 +55,7 @@ function Home(props) {
           <div className="card-body">
             <center>
               <h5 className="card-title">Book Ticket</h5>
-              <a href="www.google.com" className="btn btn-primary">
+              <a href="UserTicketBooking" className="btn btn-primary">
                 Now
               </a>
             </center>
