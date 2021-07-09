@@ -12,7 +12,12 @@ import MovieDate from "./MovieDate";
 import TheatreName from "./TheatreName";
 import TheatreArea from "./TheatreArea";
 import UserTicketBooking from "./UserTicketBooking";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 
 function App() {
   const [header, setHeader] = useState(true);
@@ -20,6 +25,10 @@ function App() {
     <Router>
       <div>
         {header && <Header />}
+
+        <Route exact path="/">
+          <Redirect to="/Login" />
+        </Route>
         <Switch>
           <Route path="/Login" component={LoginForm} />
           <Route path="/Register" component={RegisterForm} />

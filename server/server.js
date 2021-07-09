@@ -112,13 +112,13 @@ const init = async () => {
       handler: user.updateUser,
     },
     {
-      method: "DELETE",
-      path: "/user/{userId}",
+      method: "POST",
+      path: "/userDelete",
       handler: user.deleteUser,
     },
     {
-      method: "GET",
-      path: "/user/{userId}",
+      method: "POST",
+      path: "/userFind",
       handler: user.user,
     },
   ]);

@@ -17,14 +17,19 @@ function RegisterForm() {
     newData[event.target.name] = event.target.value;
     setData(newData);
   }
+  function handleEmail(event) {
+    setEmail(event.target.value);
+  }
   async function createUser(event) {
     event.preventDefault();
     try {
       await axios.post("/user", data).then(function (response) {
-        setEmail(data.email);
-        console.log(Email);
         history.push({ pathname: "/Home", state: { email: Email } });
       });
+
+      const user = await axios.post("/userFind", { email: Email });
+      const userId = user.data.id;
+      alert(`Your UserId is ${userId} Remember it`);
     } catch (err) {
       console.log(err);
     }
@@ -66,7 +71,10 @@ function RegisterForm() {
             name="email"
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
             value={data.email}
-            onChange={(event) => handleChange(event)}
+            onChange={(event) => {
+              handleChange(event);
+              handleEmail(event);
+            }}
             required
           />
           <div id="emailHelp" className="form-text">

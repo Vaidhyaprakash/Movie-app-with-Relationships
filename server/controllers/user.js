@@ -20,21 +20,21 @@ exports.addUser = async function addUser(req, h) {
 };
 
 exports.updateUser = async function updateUser(req, h) {
-  const { id, name, age, Email, password } = req.payload;
+  const { name, age, email, password } = req.payload;
   try {
     const user = await User.findOne({
       where: {
-        id,
+        email,
       },
     });
     if (user == null) {
       return "No Such user Exists";
     } else {
       await User.update(
-        { Email, name, age, password },
+        { email, name, age, password },
         {
           where: {
-            id,
+            email,
           },
         }
       );
@@ -46,11 +46,11 @@ exports.updateUser = async function updateUser(req, h) {
 };
 
 exports.deleteUser = async function deleteUser(req, h) {
-  const id = req.params.userId;
+  const { email } = req.payload;
   try {
     const user = await User.findOne({
       where: {
-        id,
+        email,
       },
     });
     if (user == null) {
@@ -58,7 +58,7 @@ exports.deleteUser = async function deleteUser(req, h) {
     } else {
       await User.destroy({
         where: {
-          id,
+          email,
         },
       });
       return `User Deleted Successully`;
@@ -69,11 +69,11 @@ exports.deleteUser = async function deleteUser(req, h) {
 };
 
 exports.user = async function user(req, h) {
-  const id = req.params.userId;
+  const { email } = req.payload;
   try {
     const user = await User.findOne({
       where: {
-        id,
+        email,
       },
       include: ["BOOKINGS"],
     });
